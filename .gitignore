@@ -1,0 +1,9 @@
+.Renviron
+.Rhistory
+*.html
+appprueba
+*.Rmd
+get_json_file.R
+.Rproj.user
+.local
+mvp.R
