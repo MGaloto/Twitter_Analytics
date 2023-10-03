@@ -11,6 +11,8 @@ library(shinycssloaders)
 library(reactable)
 library(htmltools)
 library(waiter)
+library(shiny)
+
 
 
 appname <- Sys.getenv('APPNAME_TW')
@@ -84,13 +86,6 @@ new_words = function(input){
 }
 
 
-
-df <- data.frame(
-  valor1 = 120,
-  valor2 = 75,
-  valor3 = 42
-)
-
 # Crear la UI del dashboard
 
 # UI ----------------------------------------------------------------------
@@ -119,7 +114,7 @@ ui <- dashboardPage(
         text = "Principal",
         tabName = "dashboard",
         startExpanded = T,
-        icon = icon("home")
+        icon = shiny::icon("dinosaur")
       ),
       selectInput(
         inputId = "input1",
@@ -137,11 +132,11 @@ ui <- dashboardPage(
       menuItem(
         text = "Word Cloud",
         tabName = "wordcloud",
-        icon = icon("info-circle")),
+        icon = shiny::icon("info-circle")),
       menuItem(
         text = "Acerca de",
         tabName = "about",
-        icon = icon("info-circle"))
+        icon = shiny::icon("info-circle"))
       )
   ),
   body = dashboardBody(
@@ -500,7 +495,7 @@ server <- function(input, output,session) {
     bs4ValueBox(
       value = paste0(if (is.null(rv$name_most_freq)) {"Insertar Word y Ejecutar Query"} else {paste0("Palabra: ",as.character(rv$name_most_freq))}),
       subtitle = paste0(if (is.null(rv$number_most_freq)) {""} else {paste0("Se encuentra ",as.character(rv$number_most_freq), " veces dentro de los ",as.character(input$input1)," Twitters.")}),
-      icon = icon("table"),
+      icon = shiny::icon("table"),
       color = "primary",
       width = NULL,
       footer = div("Mas frecuente")
@@ -513,7 +508,7 @@ server <- function(input, output,session) {
     bs4ValueBox(
       value = paste0(if (is.null(rv$ranking_user)) {"Insertar Word y Ejecutar Query"} else {paste0("User: ",as.character(rv$ranking_user[1,"screen_name"]))}),
       subtitle = paste0(if (is.null(rv$ranking_user)) {""} else {paste0("Usuario con mas Twitts que contienen la palabra ",as.character(rv$name_most_freq))}),
-      icon = icon("user-circle"),
+      icon = shiny::icon("user-circle"),
       color = "indigo",
       width = 3,
       gradient = T,
@@ -527,7 +522,7 @@ server <- function(input, output,session) {
       bs4ValueBox(
         value = paste0(if (is.null(rv$trend)) {"Insertar Word y Ejecutar Query"} else {paste0("Trend en Argentina: ",as.character(rv$trend %>% pull(trend)))}),
         subtitle = paste0(if (is.null(rv$trend)) {""} else {paste0("Total de Twitts que contienen el Trend: ",as.character(rv$trend %>% pull(tweet_volume)))}),
-        icon = icon("hourglass-half"),
+        icon = shiny::icon("hourglass-half"),
         color = "fuchsia",
         width = NULL,
         footer = div("Trend Argentina")
